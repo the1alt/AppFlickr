@@ -1,0 +1,15 @@
+@import 'partials/variables';
+
+@import 'partials/cards';
+@import 'partials/form';
+@import 'partials/grid';
+@import 'partials/sidenav';
+
+body{
+  background-color: $red;
+  height:1000px;
+  width:1000px;
+  h1{
+    color: $primary;
+  }
+}

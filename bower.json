@@ -1,0 +1,21 @@
+{
+  "name": "photoloader",
+  "description": "app permettant de loader des photos via flikr",
+  "main": "index.html",
+  "authors": [
+    "the1alt <thibaut.faurel@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.97.8"
+  }
+}
