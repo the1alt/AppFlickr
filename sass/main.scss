@@ -1,3 +1,34 @@
+/****************************Import materialize************************************/
+@charset "UTF-8";
+
+// Mixins
+// @import "components/prefixer";
+@import "materialize/components/mixins";
+@import "materialize/components/color";
+
+// Variables;
+@import "materialize/components/variables";
+
+// Reset
+@import "materialize/components/normalize";
+
+// components
+@import "materialize/components/global";
+@import "materialize/components/icons-material-design";
+@import "materialize/components/grid";
+@import "materialize/components/navbar";
+@import "materialize/components/typography";
+@import "materialize/components/tabs";
+@import "materialize/components/tooltip";
+@import "materialize/components/buttons";
+@import "materialize/components/waves";
+@import "materialize/components/forms/forms";
+@import "materialize/components/sideNav";
+@import "materialize/components/chips";
+@import "materialize/components/preloader";
+@import "materialize/components/slider";
+
+/***************************Imports partials*******************************/
 @import 'partials/variables';
 
 @import 'partials/cards';
@@ -6,10 +37,26 @@
 @import 'partials/sidenav';
 
 body{
-  background-color: $red;
-  height:1000px;
-  width:1000px;
+  @extend .green, .lighten-1;
   h1{
     color: $primary;
   }
+  header{
+    #askBtn{
+      margin-left:15px;
+    }
+  }
+}
+
+main{
+  padding:20px 50px;
+
+}
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
 }

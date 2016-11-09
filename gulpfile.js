@@ -65,7 +65,7 @@ gulp.task('css',function(){
 gulp.task('sass',function(){
    console.log('Ma tâche pour le sass...');
 
-   return gulp.src('./sass/**/*.scss')
+   return gulp.src('./sass/*.scss')
    .pipe(sourcemaps.init())
    .pipe(sass().on('error', sass.logError)) //compiler du sass en css
    .pipe(autoprefixer({
@@ -73,6 +73,8 @@ gulp.task('sass',function(){
    }))
    .pipe(concat('bundle-sass.css'))//concaténation en 1 seul fichier
    .pipe(minifyCss()) //compression de la css
+  //  .pipe(uncss({
+  //           html: ['index.html', 'posts/**/*.html']}))
    .pipe(sourcemaps.write('.'))
    .pipe(gulp.dest('./dist/css/')) // permet d'envoyer le fichier minifier dans le répertoire dist/css
    .pipe(notify("Sass compressée et concatenée !"))
@@ -83,7 +85,7 @@ gulp.task('sass',function(){
 gulp.task('js',function(){
   return gulp.src('./js/*.js')
   .pipe(concat('app.min.js'))//concaténation en 1 seul fichier
-  .pipe(uglify()) //minify js
+  // .pipe(uglify()) //minify js
   .pipe(gulp.dest('./dist/js/')) // permet d'envoyer le fichier minifier dans le répertoire dist/css
   .pipe(notify("JS modifié !"))
   .pipe(reload({stream:true, once:true})); //je relance mon navigateur quand ma tâche css est accomplie : permet de rafraîchir mon navigateur
