@@ -15,11 +15,6 @@
     <div class="nav-wrapper">
       <a href="#" data-activates="slide-out" class="waves-effect waves-light btn" id="askBtn">Ajouter des boutons</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="search" href="#">Javascript</a></li>
-        <li><a class="search" href="#">PHP</a></li>
-        <li><a class="search" href="#">HTML</a></li>
-        <li><a class="search" href="#">CSS</a></li>
-        <li><a class="search" href="#">Node</a></li>
       </ul>
     </div>
   </nav>
@@ -31,6 +26,9 @@
     <div id="slide-out" class="side-nav">
       <div class="input-field col s12">
         <div class="chips"></div>
+        <p class="range-field">
+          <input type="range" id="nbPhotos" min="0" max="20" value="20"/>
+        </p>
         <a href="#" id="addBtn" class= "waves-effect waves-light btn">Ajouter des photos</a>
       </div>
     </div>

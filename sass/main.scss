@@ -31,11 +31,6 @@
 /***************************Imports partials*******************************/
 @import 'partials/variables';
 
-@import 'partials/cards';
-@import 'partials/form';
-@import 'partials/grid';
-@import 'partials/sidenav';
-
 body{
   @extend .green, .lighten-1;
   h1{
@@ -50,13 +45,15 @@ body{
 
 main{
   padding:20px 50px;
-
-}
-.clear {
-  clear: both;
-  display: block;
-  overflow: hidden;
-  visibility: hidden;
-  width: 0;
-  height: 0;
+  .valign-wrapper{
+    .divImg{
+      box-sizing: border-box;
+      display:block;
+      background-color:white;
+      .aImg{
+        background-color:white;
+        text-align: center;
+      }
+    }
+  }
 }
