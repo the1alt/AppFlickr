@@ -5,8 +5,12 @@ var datas = [];
 var search = [];
 var mesDatasMaterial;
 
+//initialisation de masonry
+
+
 //fonction Flickr
 var flickr = function(recherche){
+
   //AJAX
   var flickrAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?&per_page=100";
 
@@ -20,30 +24,37 @@ var flickr = function(recherche){
 
   function displayPhotos(data){
 
-    var photoHTML = '';
+    var photoHTML = '<div class="grid-sizer"></div>';
 
-    console.log();
 
     $.each( data.items, function(i, photo){
       if(i < $('#nbPhotos').val()){
 
-        if(i%4 === 0 ){
-          photoHTML += '</div><div class="row valign-wrapper">';
-        }
-
-        photoHTML += '<div class="col s3 valign divImg">';
-        photoHTML += '<a href="' + photo.link + '" class="aImg">';
+        photoHTML += '<div class="grid-item">';
+        photoHTML += '<a href="' + photo.link + '" class="aImg animate">';
         photoHTML += '<img src="' + photo.media.m + '" class="responsive-img" ></a></div>';
 
       }
     });
 
-
-    $('.container .row #photos').html(photoHTML);
+    $('#photos').html(photoHTML);
   }
 
-  $.getJSON(flickrAPI, flickrOptions, displayPhotos);
+  $.getJSON(flickrAPI, flickrOptions, displayPhotos).done(function(){
+    $('.grid').masonry('destroy');
+    $('.grid').imagesLoaded(function(){
+      $('.grid').masonry({
+      itemSelector: '.grid-item',
+      columnWidth: '.grid-sizer',
+      percentPosition: true,
+      gutter:10,
+      fitWidth: true,
+      });
+    });
+  });
+
 };
+
 
 
 //initialisation des datas
@@ -69,11 +80,13 @@ else{
   flickr(value);
 }
 
-
-
 });
 
-
+// new AnimOnScroll( document.getElementById( 'grid' ), {
+// 		minDuration : 0.4,
+// 		maxDuration : 0.7,
+// 		viewportFactor : 0.2
+// 	} );
 
 
 
@@ -135,9 +148,6 @@ $(".btn#addBtn").click(function(){
     flickr($('#nav-mobile li:first-child').children().text());
   }
 
-
-
-
     //cache la sideNav
     $(".btn#askBtn").sideNav('hide');
 
@@ -146,13 +156,15 @@ $(".btn#addBtn").click(function(){
     sessionStorage.setItem("objet",mesDatasMaterial);
 });
 
+
+//affiche les image quand on clique sur le bouton
 $('#nav-mobile').on('click', 'a.search', function() {
 		$('li:has(a.search)').removeClass("active");
 		$(this).parent().addClass("active");
     flickr($(this).text());
 }); //end click
 
-
+//supprimme les boutons quand on supprime une chip
 $('.chips').on('chip.delete', function(e, chip){
 
   console.log(chip);

@@ -33,26 +33,25 @@
 
 body{
   @extend .green, .lighten-1;
-  h1{
-    color: $primary;
-  }
   header{
     #askBtn{
       margin-left:15px;
     }
   }
-}
-
-main{
-  padding:20px 50px;
-  .valign-wrapper{
-    .divImg{
-      box-sizing: border-box;
-      display:block;
-      background-color:white;
-      .aImg{
-        background-color:white;
-        text-align: center;
+  main{
+    padding:20px 50px;
+    .grid{
+      perspective:1300px;
+      margin: 0 auto;
+      .grid-sizer{
+        width: 24%;
+      }
+      .grid-item{
+        width: 24%;
+        margin-bottom: 10px;
+        .aImg{
+          text-align: center;
+        }
       }
     }
   }
