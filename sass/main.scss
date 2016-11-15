@@ -32,7 +32,7 @@
 @import 'partials/variables';
 
 body{
-  @extend .green, .lighten-1;
+  color: #ddd;
   header{
     #askBtn{
       margin-left:15px;

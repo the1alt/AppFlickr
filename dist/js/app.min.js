@@ -5,8 +5,35 @@ var datas = [];
 var search = [];
 var mesDatasMaterial;
 
-//initialisation de masonry
+//initialisation des datas
+if(sessionStorage.getItem('objet')){
+  mesDatasMaterial = sessionStorage.getItem("objet");
+  search = JSON.parse(mesDatasMaterial);
+  search.forEach(function(value, i){
+    datasBase.unshift({tag : value });
+  });
+}
+else {
+  search = ["Node","CSS","HTML","PHP","Javascript"];
+  search.forEach(function(value, i){
+    datasBase.unshift({tag : value });
+  });
+}
 
+//fonction d'initialisation des boutons et tags selon la datasBase
+var affichageBoutons = function(){
+  search.forEach(function(value, i){
+  if(i < search.length -1 ){
+    $('#nav-mobile').prepend('<li><a class="search" href="#">' + value + '</a></li>');
+  }
+  else{
+
+    $('#nav-mobile').prepend('<li class="active"><a class="search" href="#">' + value + '</a></li>');
+    flickr(value);
+  }
+
+  });
+};
 
 //fonction Flickr
 var flickr = function(recherche){
@@ -30,13 +57,10 @@ var flickr = function(recherche){
     $.each( data.items, function(i, photo){
       $('.preloader-wrapper').removeClass('hide');
       $('.grid').addClass('hide');
-      if(i < $('#nbPhotos').val()){
+      photoHTML += '<div class="grid-item">';
+      photoHTML += '<a href="' + photo.link + '" class="aImg animate">';
+      photoHTML += '<img src="' + photo.media.m + '" class="responsive-img" ></a></div>';
 
-        photoHTML += '<div class="grid-item">';
-        photoHTML += '<a href="' + photo.link + '" class="aImg animate">';
-        photoHTML += '<img src="' + photo.media.m + '" class="responsive-img" ></a></div>';
-
-      }
     });
 
     $('#photos').html(photoHTML);
@@ -57,35 +81,13 @@ var flickr = function(recherche){
 
     });
   });
-
 };
 
 
 
-//initialisation des datas
-if(sessionStorage.getItem('objet')){
-  mesDatasMaterial = sessionStorage.getItem("objet");
-  search = JSON.parse(mesDatasMaterial);
-}
-else {
-  search = ["Node","CSS","HTML","PHP","Javascript"];
-}
 
-//initialisation des boutons et tags selon la datasBase
-search.forEach(function(value, i){
-datasBase.unshift({tag : value });
-if(i < search.length -1 ){
+affichageBoutons();
 
-  $('#nav-mobile').prepend('<li><a class="search" href="#">' + value + '</a></li>');
-
-}
-else{
-
-  $('#nav-mobile').prepend('<li class="active"><a class="search" href="#">' + value + '</a></li>');
-  flickr(value);
-}
-
-});
 
 // new AnimOnScroll( document.getElementById( 'grid' ), {
 // 		minDuration : 0.4,
@@ -108,50 +110,29 @@ $('.chips').material_chip({
 //gestion des chips et d'ajout de boutons par l'utilisateur
 $(".btn#addBtn").click(function(){
 
-  //récupération des chips
+  //reset de la class active
+  $('li:has(a.search)').removeClass("active");
 
+  //récupération des chips
   var dataChips = $('.chips').material_chip('data');
   dataChips.forEach(function(value, i){
+    console.log(value.tag);
     if(jQuery.inArray(value.tag,search) < 0)
       search.push(value.tag);
   });
 
+  $('#nav-mobile').empty();
 
-  //reset de la class active
-  $('li:has(a.search)').removeClass("active");
+  affichageBoutons();
 
+  var firstChild = '#nav-mobile:first-child';
+
+  flickr(firstChild);
+  $(firstChild).addClass(active);
 
   $('#nav-mobile a.search').each(function(index){
     datas.push($(this).text());
   });
-
-  //compteur d'élément différents
-  var j = 0;
-
-  //balaye les éléments de "search"
-  search.forEach(function(value,i){
-      //vérifie si l'élément n'existe pas déjà
-      if(jQuery.inArray(value,datas) < 0){
-        j += 1;
-        //permet de lancer les recherches d'image, et d'afficher les photos et mettre la classe active sur le dernier élément
-        if(i < search.length -1){
-
-          $('#nav-mobile').prepend('<li> <a class="search" href="#">' + value + '</a></li>');
-
-        }
-        else{
-          flickr(value);
-          $('#nav-mobile').prepend('<li class="active"> <a class="search" href="#">' + value + '</a></li>');
-        }
-      }
-  });
-
-  //si aucun ajout de bouton, affichage du dernier bouton de la liste
-  if(j === 0){
-
-    $('#nav-mobile li:first-child').addClass("active");
-    flickr($('#nav-mobile li:first-child').children().text());
-  }
 
     //cache la sideNav
     $(".btn#askBtn").sideNav('hide');
@@ -161,6 +142,19 @@ $(".btn#addBtn").click(function(){
     sessionStorage.setItem("objet",mesDatasMaterial);
 });
 
+$('#nbPhotos').mouseleave(function(){
+  $('.grid-item').each(function(index, value){
+    if(index+1 <= $('#nbPhotos').val()){
+      $(this).removeClass('hide');
+    }
+    else{
+      $(this).addClass('hide');
+    }
+  });
+
+
+
+});
 
 //affiche les image quand on clique sur le bouton
 $('#nav-mobile').on('click', 'a.search', function() {
@@ -170,12 +164,21 @@ $('#nav-mobile').on('click', 'a.search', function() {
 }); //end click
 
 //supprimme les boutons quand on supprime une chip
+
 $('.chips').on('chip.delete', function(e, chip){
 
-  console.log(chip);
-
+  console.log(chip.tag);
+  var positionSearch = jQuery.inArray(chip.tag, search);
+  if(positionSearch > -1){
+    search.splice(positionSearch, 1);
+  }
+  var positionDatas = jQuery.inArray(chip.tag, datas);
+  if(positionDatas > -1){
+    datas.splice(positionDatas, 1);
+  }
+  console.log('après suppression : ' + search);
   $('#nav-mobile a.search').each(function(index){
-    console.log($(this).text());
+
     if($(this).text() == chip.tag){
       $(this).parent().remove();
     }
