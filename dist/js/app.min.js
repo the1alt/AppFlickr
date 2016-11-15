@@ -28,6 +28,8 @@ var flickr = function(recherche){
 
 
     $.each( data.items, function(i, photo){
+      $('.preloader-wrapper').removeClass('hide');
+      $('.grid').addClass('hide');
       if(i < $('#nbPhotos').val()){
 
         photoHTML += '<div class="grid-item">';
@@ -43,6 +45,8 @@ var flickr = function(recherche){
   $.getJSON(flickrAPI, flickrOptions, displayPhotos).done(function(){
     $('.grid').masonry('destroy');
     $('.grid').imagesLoaded(function(){
+      $('.preloader-wrapper').addClass('hide');
+      $('.grid').removeClass('hide');
       $('.grid').masonry({
       itemSelector: '.grid-item',
       columnWidth: '.grid-sizer',
@@ -50,6 +54,7 @@ var flickr = function(recherche){
       gutter:10,
       fitWidth: true,
       });
+
     });
   });
 

@@ -6,7 +6,7 @@
     "the1alt <thibaut.faurel@gmail.com>"
   ],
   "license": "ISC",
-  "homepage": "",
+  "homepage": "https://github.com/the1alt/AppFlickr",
   "ignore": [
     "**/.*",
     "node_modules",

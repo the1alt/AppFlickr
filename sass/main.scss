@@ -40,6 +40,10 @@ body{
   }
   main{
     padding:20px 50px;
+    .preloader-wrapper{
+      display: block;
+      margin: 10px auto;
+    }
     .grid{
       perspective:1300px;
       margin: 0 auto;
